@@ -30,8 +30,12 @@ while [ $TRY -le $MAX_TRIES ]; do
         echo "成功获取到 IP: $IP" >> "$LOGFILE"
         break
     else
-        echo "未能获取到 IP，等待 $SLEEP_TIME 秒后重试..." >> "$LOGFILE"
-        sleep $SLEEP_TIME
+        if [ $TRY -lt $MAX_TRIES ]; then
+            echo "未能获取到 IP，等待 $SLEEP_TIME 秒后重试..." >> "$LOGFILE"
+            sleep $SLEEP_TIME
+        else
+            echo "未能获取到 IP，已达到最大尝试次数，不再等待。" >> "$LOGFILE"
+        fi
     fi
     
     TRY=$((TRY + 1))
