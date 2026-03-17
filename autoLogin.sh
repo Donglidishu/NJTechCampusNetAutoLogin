@@ -21,7 +21,7 @@ TRY=1              # 当前尝试次数
 SLEEP_TIME=10      # 每次尝试之间的等待时间（秒）
 IP=""
 
-while [ $TRY -le $MAX_TRIES ]; do
+while [ "$TRY" -le "$MAX_TRIES" ]; do
     echo "尝试 $TRY: 获取 IP 地址..." >> "$LOGFILE"
     # 获取 IP 地址，假设接口名为 eth0.1
     IP=$(ip addr show eth0.1 | grep "inet " | awk '{print $2}' | cut -d'/' -f1)
@@ -30,7 +30,7 @@ while [ $TRY -le $MAX_TRIES ]; do
         echo "成功获取到 IP: $IP" >> "$LOGFILE"
         break
     else
-        if [ $TRY -lt $MAX_TRIES ]; then
+        if [ "$TRY" -lt "$MAX_TRIES" ]; then
             echo "未能获取到 IP，等待 $SLEEP_TIME 秒后重试..." >> "$LOGFILE"
             sleep $SLEEP_TIME
         else
